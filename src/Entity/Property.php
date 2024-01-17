@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\PropertyRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\PropertyRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PropertyRepository::class)]
@@ -15,34 +16,58 @@ class Property
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min:2,max:50)]
     private ?string $category = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min:2,max:50)]
     private ?string $type = null;
 
     #[ORM\Column]
+    #[Assert\NotNull()]
+    #[Assert\Positive()]
+    #[Assert\GreaterThan(10)]
     private ?float $surface = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min:2,max:50)]
     private ?string $status = null;
 
     #[ORM\Column]
+    #[Assert\NotNull()]
+    #[Assert\Positive()]
+    #[Assert\GreaterThan(10)]
     private ?float $price = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min:2,max:100)]
     private ?string $adresse = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min:2,max:50)]
     private ?string $city = null;
 
     #[ORM\Column]
+     #[Assert\NotNull()]
     private ?int $zipecode = null;
 
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    private ?string $picture = null;
+
     #[ORM\Column]
+     #[Assert\NotNull()]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $picture = null;
+    public function __construct()
+    {
+        $this->createdAt=new DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
